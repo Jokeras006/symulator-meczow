@@ -83,7 +83,7 @@ if uploaded_matches and uploaded_rules:
         # Przycisk uruchomienia
         if st.button("🚀 Uruchom symulację na wybranym zakresie", use_container_width=True):
             with st.spinner("Trwa obliczanie wyników..."):
-                summary, sim_details = run_simulation(filtered_matches, df_rules)
+                sim_details, summary = run_simulation(filtered_matches, df_rules)
                 st.session_state.sim_results = sim_details
                 st.session_state.summary = summary
                 st.success("Symulacja zakończona!")
