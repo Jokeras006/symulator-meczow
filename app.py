@@ -94,9 +94,19 @@ if uploaded_matches and uploaded_rules:
             
             with tab1:
                 st.subheader("Porównanie ROI (%)")
-                fig_roi = px.bar(st.session_state.summary, x='rule_name', y='roi', color='roi',
-                                 color_continuous_scale='RdYlGn', title="ROI per Reguła")
-                st.plotly_chart(fig_roi, use_container_width=True)
+                # Sprawdzamy czy kolumna 'roi' na pewno istnieje w podsumowaniu
+                if 'roi' in st.session_state.summary.columns:
+                    fig_roi = px.bar(
+                        st.session_state.summary, 
+                        x='rule_name', 
+                        y='roi', 
+                        color='roi',
+                        color_continuous_scale='RdYlGn', 
+                        title="ROI per Reguła"
+                    )
+                    st.plotly_chart(fig_roi, use_container_width=True)
+                else:
+                    st.error("Nie znaleziono kolumny ROI w wynikach symulacji.")
                 
             with tab2:
                 st.dataframe(st.session_state.summary.style.background_gradient(subset=['roi'], cmap='RdYlGn'), use_container_width=True)
